@@ -49,7 +49,19 @@
         justify-content: space-between;
         padding: 0.5rem 1rem;
         z-index: 9999;
+        flex-wrap: wrap;
       }
+
+      .nav-container {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex: 1;
+        justify-content: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
       .logo {
         display: flex;
         align-items: center;
@@ -60,18 +72,31 @@
         margin-right: 0.5rem;
         border-radius: 50%;
       }
+      .menu-toggle {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--nav-text-color);
+      }
       nav ul {
         list-style: none;
         display: flex;
-        gap: 1rem;
+        gap: 2rem;
         margin: 0;
         padding: 0;
+        flex-direction: column;
+        display: none;
+        width: 100%;
+      }
+      nav ul.active {
+        display: flex;
       }
       nav a {
         text-decoration: none;
         color: var(--nav-text-color);
         font-weight: 500;
         transition: color var(--transition-speed) ease;
+        padding: 0.5rem 1rem;
       }
       nav a:hover {
         color: #0070c9;
@@ -80,6 +105,19 @@
         cursor: pointer;
         font-size: 1.2rem;
         color: var(--nav-text-color);
+        display: flex;
+        align-items: center;
+        transition: color var(--transition-speed) ease;
+      }
+
+      @media (min-width: 768px) {
+        nav ul {
+          flex-direction: row;
+          display: flex;
+        }
+        .menu-toggle {
+          display: none;
+        }
       }
 
       main {
@@ -122,14 +160,17 @@
       <div class="logo">
         <a href="index.html">
           <img src="./assets/IMG_1362-removebg-preview.png" alt="WCO Logo" />
+          <span style="font-weight: bold">WCO</span>
         </a>
-        <span style="font-weight: bold">WCO</span>
       </div>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="board.html">Board</a></li>
-        <li><a href="resources.html">Resources</a></li>
-      </ul>
+      <div class="menu-toggle" id="menuToggle">&#9776;</div>
+      <div class="nav-container">
+        <ul id="navMenu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="board.html">Board</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </div>
       <div
         class="dark-mode-toggle"
         id="darkModeToggle"
@@ -169,6 +210,13 @@
         document.body.classList.toggle("dark-mode");
         toggleBtn.innerHTML = isDarkMode ? "&#9789;" : "&#9788;";
         localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+      });
+
+      const menuToggle = document.getElementById("menuToggle");
+      const navMenu = document.getElementById("navMenu");
+
+      menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
       });
     </script>
   </body>

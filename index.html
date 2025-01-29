@@ -59,6 +59,7 @@
         z-index: 9999;
         transition: background var(--transition-speed) ease,
           color var(--transition-speed) ease;
+        flex-wrap: wrap;
       }
 
       .logo {
@@ -71,18 +72,40 @@
         margin-right: 0.5rem;
         border-radius: 50%;
       }
+      .menu-toggle {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--nav-text-color);
+      }
+      .nav-container {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex: 1;
+        justify-content: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
       nav ul {
         list-style: none;
         display: flex;
-        gap: 1rem;
+        gap: 2rem;
         margin: 0;
         padding: 0;
+        flex-direction: column;
+        display: none;
+        width: 100%;
+      }
+      nav ul.active {
+        display: flex;
       }
       nav a {
         text-decoration: none;
         color: var(--nav-text-color);
         font-weight: 500;
         transition: color var(--transition-speed) ease;
+        padding: 0.5rem 1rem;
       }
       nav a:hover {
         color: #0070c9;
@@ -94,6 +117,16 @@
         display: flex;
         align-items: center;
         transition: color var(--transition-speed) ease;
+      }
+
+      @media (min-width: 768px) {
+        nav ul {
+          flex-direction: row;
+          display: flex;
+        }
+        .menu-toggle {
+          display: none;
+        }
       }
 
       body {
@@ -406,16 +439,19 @@
         <img src="./assets/IMG_1362-removebg-preview.png" alt="WCO Logo" />
         <span style="font-weight: bold">WCO</span>
       </div>
-      <ul>
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#sponsors">Sponsors</a></li>
-        <li><a href="#events">Events</a></li>
-        <li><a href="#join">Join</a></li>
-        <li><a href="#connect">Connect</a></li>
-        <li><a href="board.html">Board</a></li>
-        <li><a href="resources.html">Resources</a></li>
-      </ul>
+      <div class="menu-toggle" id="menuToggle">&#9776;</div>
+      <div class="nav-container">
+        <ul id="navMenu">
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#sponsors">Sponsors</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#join">Join</a></li>
+          <li><a href="#connect">Connect</a></li>
+          <li><a href="board.html">Board</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </div>
       <div
         class="dark-mode-toggle"
         id="darkModeToggle"
@@ -674,6 +710,13 @@
           }
         });
       }
+
+      const menuToggle = document.getElementById("menuToggle");
+      const navMenu = document.getElementById("navMenu");
+
+      menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+      });
 
       // Typing effect function with callback
       function typeText(element, text, delay = 50, callback) {

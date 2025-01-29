@@ -35,7 +35,7 @@
         color: var(--text-color);
         transition: background var(--transition-speed) ease,
           color var(--transition-speed) ease;
-        margin-top: 60px;
+        margin-top: 80px; /* Increase margin-top to ensure content starts below the fixed nav */
       }
 
       nav {
@@ -50,6 +50,7 @@
         justify-content: space-between;
         padding: 0.5rem 1rem;
         z-index: 9999;
+        flex-wrap: wrap;
       }
       .logo {
         display: flex;
@@ -61,18 +62,40 @@
         margin-right: 0.5rem;
         border-radius: 50%;
       }
+      .nav-container {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex: 1;
+        justify-content: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .menu-toggle {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--nav-text-color);
+      }
       nav ul {
         list-style: none;
         display: flex;
-        gap: 1rem;
+        gap: 2rem;
         margin: 0;
         padding: 0;
+        flex-direction: column;
+        display: none;
+        width: 100%;
+      }
+      nav ul.active {
+        display: flex;
       }
       nav a {
         text-decoration: none;
         color: var(--nav-text-color);
         font-weight: 500;
         transition: color var(--transition-speed) ease;
+        padding: 0.5rem 1rem;
       }
       nav a:hover {
         color: #0070c9;
@@ -81,6 +104,22 @@
         cursor: pointer;
         font-size: 1.2rem;
         color: var(--nav-text-color);
+        display: flex;
+        align-items: center;
+        transition: color var(--transition-speed) ease;
+      }
+      .logo, .dark-mode-toggle {
+        flex-shrink: 0;
+      }
+
+      @media (min-width: 768px) {
+        nav ul {
+          flex-direction: row;
+          display: flex;
+        }
+        .menu-toggle {
+          display: none;
+        }
       }
 
       h1,
@@ -208,14 +247,17 @@
       <div class="logo">
         <a href="index.html">
           <img src="./assets/IMG_1362-removebg-preview.png" alt="WCO Logo" />
+          <span style="font-weight: bold">WCO</span>
         </a>
-        <span style="font-weight: bold">WCO</span>
       </div>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="board.html">Board</a></li>
-        <li><a href="resources.html">Resources</a></li>
-      </ul>
+      <div class="menu-toggle" id="menuToggle">&#9776;</div>
+      <div class="nav-container">
+        <ul id="navMenu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="board.html">Board</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </div>
       <div
         class="dark-mode-toggle"
         id="darkModeToggle"
@@ -243,7 +285,7 @@
           <a href="https://www.linkedin.com/in/enzoweiss/" target="_blank"
             >LinkedIn</a
           >
-          <a href="./resources/PRESIDENT_RESUME.pdf" target="_blank">Resume</a>
+          <a href="./WCO/assets/Enzo_WordResume.pdf" target="_blank">Resume</a>
         </div>
       </div>
       <div class="president-card president-card-right">
@@ -318,7 +360,16 @@
               target="_blank"
               >LinkedIn</a
             >
-            <a href="./resources/member4_resume.pdf" target="_blank">Resume</a>
+            <a href="./WCO/assets/Kody_.pdf" target="_blank">Resume</a>
+          </div>
+        </div>
+        <div class="board-member">
+          <img src="./WCO/assets/Amanda_Headshot.png" alt="Board Member Amanda" />
+          <h4>Amanda Smith</h4>
+          <p>Marketing<br />Director of Marketing</p>
+          <div class="member-links">
+            <a href="https://www.linkedin.com/in/amanda-almanzor-a4ab26297/?profileId=ACoAAEfkRFoBeBKpflZMvRuFddsEs0hzCE6jZhQ" target="_blank">LinkedIn</a>
+            <a href="./resources/amanda_resume.pdf" target="_blank">Resume</a>
           </div>
         </div>
         <div class="board-member">
@@ -346,15 +397,6 @@
           <div class="member-links">
             <a href="https://linkedin.com/in/..." target="_blank">LinkedIn</a>
             <a href="./resources/member7_resume.pdf" target="_blank">Resume</a>
-          </div>
-        </div>
-        <div class="board-member">
-          <img src="./resources/headshot8.png" alt="Board Member 8" />
-          <h4>Board Member 8</h4>
-          <p>Major<br />Role</p>
-          <div class="member-links">
-            <a href="https://linkedin.com/in/..." target="_blank">LinkedIn</a>
-            <a href="./resources/member8_resume.pdf" target="_blank">Resume</a>
           </div>
         </div>
       </div>
@@ -473,6 +515,13 @@
     <footer>© 2024 World Computing Organization</footer>
 
     <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const navMenu = document.getElementById("navMenu");
+
+      menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+      });
+
       const toggleBtn = document.getElementById("darkModeToggle");
       let isDarkMode = false;
 
